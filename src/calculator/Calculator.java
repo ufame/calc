@@ -1,9 +1,11 @@
+package calculator;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Calculator {
     // Определяем словарь римских цифр
-    private static final Map<String, Integer> ROMAN_NUMERALS = new HashMap<>() {{
+    private static final Map<String, Integer> ROMAN_NUMERALS = new HashMap<String, Integer>() {{
         put("I", 1);
         put("II", 2);
         put("III", 3);
@@ -87,14 +89,14 @@ public class Calculator {
             throw new IllegalArgumentException("Invalid expression: " + expression);
         }
 
-        boolean isRoman = isRomanNumeral(parts[0]);
-        if (isRoman != isRomanNumeral(parts[2])) {
+        if (isRomanNumeral(parts[0]) != isRomanNumeral(parts[2])) {
             throw new IllegalArgumentException("Expression contains numbers of different formats: " + expression);
         }
 
         // Получаем значения левой и правой частей выражения
         int left = parseNumber(parts[0]);
         int right = parseNumber(parts[2]);
+
         // Выполняем операцию в зависимости от знака между левой и правой частями выражения
         int result = switch (parts[1]) {
             case "+" -> left + right;
@@ -105,7 +107,7 @@ public class Calculator {
         };
 
         // Если обе части выражения записаны римскими цифрами, то результат преобразуем в римскую запись
-        if (isRoman) {
+        if (isRomanNumeral(parts[0]) && isRomanNumeral(parts[2])) {
             return arabicToRoman(result);
         } else {
             return Integer.toString(result);
